@@ -65,7 +65,13 @@ export async function doLit() {
     jsParams: {
       RANDOM_CONTRACT_ADDRESS: RANDOM_CONTRACT_ADDRESS,
       RPC_URL: pacifica.rpcUrls.default.http[0],
-      CHAIN_ID: pacifica.id
+      CHAIN_ID: pacifica.id,
+      // PKP Info: {
+      //   publicKey: "0x04c5c14d65f74e8df98dc2af5df40d71695f1b6aaa0c347a3f903c530e47649090069af1ef63f5c58537cb5d955175390ea1af28615bbcac9381c742191f36c0ac",
+      //   ethAddress: "0xaa70631134C9b6c0Bf846faCE0bF04f0238dda8d",
+      //   tokenId: "0x0ad21b2475d5f09cf9861512ea2fe6da0376c97504701b0ede812e2d58d669a5",
+      // }
+      PKP_PUBLIC_KEY: "0x04c5c14d65f74e8df98dc2af5df40d71695f1b6aaa0c347a3f903c530e47649090069af1ef63f5c58537cb5d955175390ea1af28615bbcac9381c742191f36c0ac",
     }
   })
   if (!success) {
