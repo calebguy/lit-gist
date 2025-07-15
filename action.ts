@@ -74,10 +74,7 @@ const _litActionCode = async () => {
 
     // Tx creation
     const ethersProvider = new ethers.providers.JsonRpcProvider(RPC_URL)
-    // creation TX: https://yellowstone-explorer.litprotocol.com//tx/0xf4583cbc016b12ce6e23b5c52df2842be52a1242a8cbdb3394a1f883d85bb016
-    const PKPPublicKey =
-      "0x04c5ff05aae0b47f26b8f58f170480153962a40353ab3fd2945d6bb4f5a79ff16966af8f17a27b345d3b73c8416dabbfaec4788798889db26ef38f76e50efa693b"
-    const PKPETHAddress = "0x5777972A9b60bd2734b2137bA0fe9F2e5afe5991"
+    const PKPETHAddress = ethers.utils.computeAddress(PKP_PUBLIC_KEY)
 
     const abi = ["function setRandom(uint256 _random) external"]
     const iface = new ethers.utils.Interface(abi)
@@ -89,7 +86,7 @@ const _litActionCode = async () => {
     const data = iface.encodeFunctionData("setRandom", [
       BigInt(finalRandomnessHex)
     ])
-  
+
 
     // Hardcoding gas limit for now so caller does not need correct onchain role
     const estimatedGas = 43484
@@ -118,7 +115,7 @@ const _litActionCode = async () => {
     )
     const litSignature = await Lit.Actions.signAndCombineEcdsa({
       toSign: hashedTxToSign,
-      publicKey: PKPPublicKey.slice(2),
+      publicKey: PKP_PUBLIC_KEY.slice(2),
       sigName: "signedRandomness"
     })
 
