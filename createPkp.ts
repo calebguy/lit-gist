@@ -6,7 +6,7 @@ import {
 } from "@lit-protocol/constants"
 import { LitContracts } from "@lit-protocol/contracts-sdk"
 import { ethers } from "ethers"
-//@ts-ignore
+// @ts-ignore
 import Hash from "ipfs-only-hash"
 import { litActionCode } from "./action"
 
