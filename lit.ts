@@ -60,7 +60,7 @@ export async function doLit() {
 		},
 	});
 	const PKP_PUBLIC_KEY =
-		"0x0444ffabb4252caa76daae450bb119b93f02a19354e4052f455d82cf4b159abe0438c188b30a60e94269a3a0767fa35b6e74c5e8953852c89a5cb4bd202a834bfa";
+		"0x04bb960e3e50b839f4c321e572a7d26aacb238741ab5a59db965ca32cae2b865bebe706ba411f5a769788f8570050999e27fc6101e579285d2317c44441dc488dc";
 	const { success, response } = await client.executeJs({
 		sessionSigs,
 		code: litActionCode,

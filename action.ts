@@ -89,10 +89,9 @@ const _litActionCode = async () => {
 				}
 			},
 		);
-		console.log("randomness", randomness);
 
 		const unsignedTransactionResponse = await Lit.Actions.runOnce(
-			{ waitForResponse: true, name: "txnSender" },
+			{ waitForResponse: true, name: "transactionGenerator" },
 			async () => {
 				try {
 					// Tx creation
@@ -109,14 +108,12 @@ const _litActionCode = async () => {
 						BigInt(randomness),
 					]);
 
-					// Hardcoding gas limit for now so caller does not need correct onchain role
-					const estimatedGas = 43484;
-					// const estimatedGas = await contract.estimateGas.setRandom(
-					//   BigInt(finalRandomnessHex),
-					//   {
-					//     from: PKPETHAddress
-					//   }
-					// )
+					const estimatedGas = await contract.estimateGas.setRandom(
+						BigInt(randomness),
+						{
+							from: PKPETHAddress,
+						},
+					);
 					const feeData = await ethersProvider.getFeeData();
 					const nonce = await ethersProvider.getTransactionCount(PKPETHAddress);
 					const unsignedTransaction = {
@@ -136,15 +133,13 @@ const _litActionCode = async () => {
 			},
 		);
 		const unsignedTransaction = JSON.parse(unsignedTransactionResponse);
-		console.log("unsignedTransaction", unsignedTransaction);
 
 		const serializedTx = ethers.utils.serializeTransaction(unsignedTransaction);
 		const toSign = ethers.utils.arrayify(ethers.utils.keccak256(serializedTx));
-		console.log("toSign", toSign);
 		const litSignature = await Lit.Actions.signAndCombineEcdsa({
 			toSign,
 			publicKey: PKP_PUBLIC_KEY.slice(2),
-			sigName: "signedRandomness",
+			sigName: "setRandomnessTransaction",
 		});
 
 		const jsonSignature = JSON.parse(litSignature);
@@ -158,7 +153,6 @@ const _litActionCode = async () => {
 		);
 
 		const recoveredAddress = ethers.utils.recoverAddress(toSign, hexSignature);
-		console.log("Recovered Address:", recoveredAddress);
 
 		Lit.Actions.setResponse({
 			response: JSON.stringify({
