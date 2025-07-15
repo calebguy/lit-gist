@@ -4,6 +4,7 @@
   "type": "module",
   "private": true,
   "devDependencies": {
+    "@biomejs/biome": "2.1.1",
     "@types/bun": "latest"
   },
   "peerDependencies": {
@@ -18,6 +19,7 @@
     "viem": "^2.31.7"
   },
   "scripts": {
-    "lit": "bun run lit.ts"
+    "lit": "bun run lit.ts",
+    "create-pkp": "bun run createPkp.ts"
   }
 }
